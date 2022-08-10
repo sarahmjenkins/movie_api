@@ -40,32 +40,36 @@
               <td>[title] = name of the movie</td>
               <td>None</td>
               <td>
-                A JSON object holding data about the selected movie.<br>
-              Example:<br>
-              {<br>
-              title: 'Booksmart',<br>
-              description: 'On the eve of their high-school graduation, two academic superstars and best friends realize they should
-              have worked less and played more. Determined not to fall short of their peers, the girls try to cram four years of fun
-              into one night.',<br>
-              year: '2019',<br>
-              director: {<br>
-              name: 'Olivia Wilde',<br>
-              bio: 'Olivia Wilde is an American actress and filmmaker. She played Remy "Thirteen" Hadley on the medical-drama
-              television series House (2007–2012), and appeared in the films Tron: Legacy (2010), Cowboys & Aliens (2011), The
-              Incredible Burt Wonderstone (2013), and The Lazarus Effect (2015). In 2017, Wilde made her Broadway debut, playing the
-              role of Julia in 1984. In 2019, she directed her first film, the teen comedy Booksmart, for which she won the
-              Independent Spirit Award for Best First Feature.',<br>
-              birth: 'March 10, 1984',<br>
-              death: ''<br>
-              },<br>
-              genre: {<br>
-              name: 'comedy',<br>
-              description: 'A comedy film is a category of film which emphasizes humor. These films are designed to make the audience
-              laugh through amusement. Films in this style traditionally have a happy ending (black comedy being an exception).'
-              },<br>
-              imageURL: 'https://m.media-amazon.com/images/M/MV5BMjEzMjcxNjA2Nl5BMl5BanBnXkFtZTgwMjAxMDM2NzM@._V1_.jpg',<br>
-              featured: false<br>
-              }</td>
+                A JSON object holding data about the selected movie. Example:
+                <pre>
+                  <code>
+{
+  title: 'Booksmart',
+  description: 'On the eve of their high-school graduation, two academic superstars and best friends realize they should
+have worked less and played more. Determined not to fall short of their peers, the girls try to cram four years of fun
+into one night.',
+  year: '2019',
+  director: {
+    name: 'Olivia Wilde',
+    bio: 'Olivia Wilde is an American actress and filmmaker. She played Remy "Thirteen" Hadley on the medical-drama
+television series House (2007–2012), and appeared in the films Tron: Legacy (2010), Cowboys & Aliens (2011), The
+Incredible Burt Wonderstone (2013), and The Lazarus Effect (2015). In 2017, Wilde made her Broadway debut, playing the
+role of Julia in 1984. In 2019, she directed her first film, the teen comedy Booksmart, for which she won the
+Independent Spirit Award for Best First Feature.',
+    birth: 'March 10, 1984',
+    death: ''
+  },
+  genre: {
+    name: 'comedy',
+    description: 'A comedy film is a category of film which emphasizes humor. These films are designed to make the audience
+laugh through amusement. Films in this style traditionally have a happy ending (black comedy being an exception).'
+  },
+  imageURL: 'https://m.media-amazon.com/images/M/MV5BMjEzMjcxNjA2Nl5BMl5BanBnXkFtZTgwMjAxMDM2NzM@._V1_.jpg',
+  featured: false
+}
+                  </code>
+                </pre>
+              </td>
             </tr>
             <tr>
               <td>Return data about a genre</td>
@@ -74,13 +78,18 @@
               <td>[genre name] = name of the genre</td>
               <td>None</td>
               <td>
-                A JSON object holding data about the selected genre.<br>
-                Example: <br>
-                genre: {<br>
-                name: 'comedy',<br>
-                description: 'A comedy film is a category of film which emphasizes humor. These films are designed to make the audience
-                laugh through amusement. Films in this style traditionally have a happy ending (black comedy being an exception).'
-                }<br>
+                A JSON object holding data about the selected genre. Example:
+                <pre>
+                  <code>
+{
+  genre: {
+    name: 'comedy',
+    description: 'A comedy film is a category of film which emphasizes humor. These films are designed to make the audience
+laugh through amusement. Films in this style traditionally have a happy ending (black comedy being an exception).'
+  } 
+}
+                  </code>
+                </pre>
               </td>
             </tr>
             <tr>
@@ -90,18 +99,22 @@
               <td>[director name] = name of the director</td>
               <td>None</td>
               <td>
-                A JSON object holding data about the selected director.<br>
-                Example: <br>
-                director: {<br>
-                name: 'Olivia Wilde',<br>
-                bio: 'Olivia Wilde is an American actress and filmmaker. She played Remy "Thirteen" Hadley on the medical-drama
-                television series House (2007–2012), and appeared in the films Tron: Legacy (2010), Cowboys & Aliens (2011), The
-                Incredible Burt Wonderstone (2013), and The Lazarus Effect (2015). In 2017, Wilde made her Broadway debut, playing the
-                role of Julia in 1984. In 2019, she directed her first film, the teen comedy Booksmart, for which she won the
-                Independent Spirit Award for Best First Feature.',<br>
-                birth: 'March 10, 1984',<br>
-                death: ''<br>
-                }
+                A JSON object holding data about the selected director. Example:
+                <pre>
+                  <code>
+{
+  director: {
+    name: 'Olivia Wilde',
+    bio: 'Olivia Wilde is an American actress and filmmaker. She played Remy "Thirteen" Hadley on the medical-drama
+television series House (2007–2012), and appeared in the films Tron: Legacy (2010), Cowboys & Aliens (2011), The
+Incredible Burt Wonderstone (2013), and The Lazarus Effect (2015). In 2017, Wilde made her Broadway debut, playing the
+role of Julia in 1984. In 2019, she directed her first film, the teen comedy Booksmart, for which she won the
+Independent Spirit Award for Best First Feature.',
+  birth: 'March 10, 1984',
+  death: ''
+}
+                  </code>
+                </pre>
               </td>
             </tr>
             <tr>
@@ -110,31 +123,39 @@
               <td>POST</td>
               <td>None</td>
               <td>
-                A JSON object holding data about the new user:<br>
-                {<br>
-                  "username": "Sarah",<br>
-                  "password": "1234"<br>
-                  "email": "sarah@gmail.com"<br>
-                  "birthday": "2020-01-01"<br>
-                  "favoriteMovies": [<br> 
-                  "Bridesmaids",<br> 
-                  "Pride and Prejudice"<br>
-                  ]<br>
-                }
+                A JSON object holding data about the new user. Example:
+                <pre>
+                  <code>
+{
+  username: 'Sarah',
+  password: '1234',
+  email: 'sarah@gmail.com',
+  birthday: '2020-01-01',
+  favoriteMovies: [
+    'Bridesmaids',
+    'Pride and Prejudice'
+  ]
+}
+                  </code>
+                </pre>
               </td>
               <td>
-                A JSON object holding data about the user that was added, including an ID:<br>
-                {<br>
-                "id": 4,<br>
-                "username": "Sarah",<br>
-                "password": "1234"<br>
-                "email": "sarah@gmail.com"<br>
-                "birthday": "2020-01-01"<br>
-                "favoriteMovies": [<br>
-                "Bridesmaids",<br>
-                "Pride and Prejudice"<br>
-                ]<br>
-                }
+                A JSON object holding data about the user that was added, including an ID. Example:
+                <pre>
+                  <code>
+{
+  id: 4,
+  username: 'Sarah',
+  password: '1234'
+  email: 'sarah@gmail.com'
+  birthday: '2020-01-01'
+  favoriteMovies: [
+    'Bridesmaids',
+    'Pride and Prejudice'
+  ]
+}
+                  </code>
+                </pre>
               </td>
             </tr>
             <tr>
@@ -143,13 +164,30 @@
               <td>PUT</td>
               <td>[user ID] = user\'s ID number</td>
               <td>
-                A JSON object with the user's new data:<br>
-                {<br>
-                "usernamename": "Sarah",<br>
-                "favoriteMovies": "[]"<br>
-                }
+                A JSON object with the user's new data. Example:
+                <pre>
+                  <code>
+{
+  username: 'Sarah',
+  favoriteMovies: ['']
+}
+                  </code>
+                </pre>
               </td>
-              <td>A JSON object holding updated data about the user.</td>
+              <td>A JSON object holding updated data about the user. Example:
+                <pre>
+                  <code>
+{
+  id: 4,
+  username: 'Sarah',
+  password: '1234'
+  email: 'sarah@gmail.com'
+  birthday: '2020-01-01'
+  favoriteMovies: ['']
+}
+                  </code>
+                </pre>
+              </td>
             </tr>
             <tr>
               <td>Allow users to add a movie to their list of favorites</td>
