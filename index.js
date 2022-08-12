@@ -20,7 +20,7 @@ app.use(morgan('common'));
 app.use(express.static('public'));
 
 const cors = require('cors');
-let allowedOrigins = *; // allows all domains to make requests to the API
+let allowedOrigins = [*]; // allows all domains to make requests to the API
 app.use(cors({
   origin: (origin, callback) => {
     if(!origin) return callback(null, true);
