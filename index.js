@@ -152,17 +152,17 @@ app.put('/users/:username',
       email: req.body.email,
       birthday: req.body.birthday
     }
-  },
-  {new: true}, 
-  (err, updatedUser) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Error: ' + err)
-    } else {
-      res.json(updatedUser)
-    }
+    },
+    {new: true}, 
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err)
+      } else {
+        res.status(201).json(updatedUser)
+      }
+    });
   });
-});
 
 // Allow users to add a movie to their list of favorites
 app.post('/users/:username/movies/:MovieID', passport.authenticate('jwt', {session: false}), (req, res) => {
