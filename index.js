@@ -131,7 +131,13 @@ app.post('/users',
     });
 
 // Allow users to update their user info by username
-app.put('/users/:username', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.put('/users/:username',
+  [
+    check('username', 'Username is required').isLength({min: 5}),
+    check('username', 'Username contains non-alphanumeric characters--not allowed.').isAlphanumeric(),
+    check('password', 'Password is required.').not().isEmpty(),
+    check('email', 'Email does not appear to be valid.').isEmail()
+  ], passport.authenticate('jwt', {session: false}), (req, res) => {
   Users.findOneAndUpdate({username: req.params.username}, {$set: {
       username: req.body.username,
       password: req.body.password,
