@@ -104,31 +104,31 @@ app.post('/users',
       return res.status(422).json({errors: error.array()});
     }
 
-  let hashedPassword = Users.hashPassword(req.body.Password);
-  Users.findOne({username: req.body.username}) 
-    .then((user) => { 
-      if (user) {
-        return res.status(400).send(req.body.username + 'already exists');
-      } else {
-        Users
-          .create({
-            username: req.body.username,
-            password: hashedPassword,
-            email: req.body.email,
-            birthday: req.body.birthday
+    let hashedPassword = Users.hashPassword(req.body.password);
+    Users.findOne({username: req.body.username}) 
+      .then((user) => { 
+        if (user) {
+          return res.status(400).send(req.body.username + 'already exists');
+        } else {
+          Users
+            .create({
+              username: req.body.username,
+              password: hashedPassword,
+              email: req.body.email,
+              birthday: req.body.birthday
+            })
+            .then((user) => {res.status(201).json(user)})
+          .catch((error) => {
+            console.error(error);
+            res.status(500).send('Error: ' + error);
           })
-          .then((user) => {res.status(201).json(user)})
-        .catch((error) => {
-          console.error(error);
-          res.status(500).send('Error: ' + error);
-        })
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send('Error: ' + error);
-    })
-  });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send('Error: ' + error);
+      })
+    });
 
 // Allow users to update their user info by username
 app.put('/users/:username', passport.authenticate('jwt', {session: false}), (req, res) => {
