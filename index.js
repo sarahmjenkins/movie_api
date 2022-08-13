@@ -133,7 +133,7 @@ app.post('/users',
 // Allow users to update their user info by username
 app.put('/users/:username',
   [
-    check('username', 'Username is required').isLength({min: 5}),
+    check('username', 'Username is required.').isLength({min: 5}),
     check('username', 'Username contains non-alphanumeric characters--not allowed.').isAlphanumeric(),
     check('password', 'Password is required.').not().isEmpty(),
     check('email', 'Email does not appear to be valid.').isEmail()
@@ -145,23 +145,23 @@ app.put('/users/:username',
     }
 
     let hashedPassword = Users.hashPassword(req.body.password);
-    
-    Users.findOneAndUpdate({username: req.params.username}, {$set: {
+    Users.findOneAndUpdate({username: req.params.username}, {$set: 
+      {
       username: req.body.username,
       password: req.body.password,
       email: req.body.email,
       birthday: req.body.birthday
-    }},
-      {new: true}, 
-      (err, updatedUser) => {
-        if (err) {
-          console.error(err);
-          res.status(500).send('Error: ' + err)
-        } else {
-          res.status(201).json(updatedUser)
-        }
       }
-    );
+    },
+    {new: true}, 
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err)
+      } else {
+        res.status(201).json(updatedUser);
+      }
+    });
   });
 
 // Allow users to add a movie to their list of favorites
