@@ -151,17 +151,17 @@ app.put('/users/:username',
       password: req.body.password,
       email: req.body.email,
       birthday: req.body.birthday
-    }
-    },
-    {new: true}, 
-    (err, updatedUser) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Error: ' + err)
-      } else {
-        res.status(201).json(updatedUser)
+    }},
+      {new: true}, 
+      (err, updatedUser) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Error: ' + err)
+        } else {
+          res.status(201).json(updatedUser)
+        }
       }
-    });
+    );
   });
 
 // Allow users to add a movie to their list of favorites
