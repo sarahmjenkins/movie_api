@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Models = require('./models.js');
+const cors = require('cors')
 const {check, validationResult} = require('express-validator');
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -19,7 +20,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(morgan('common'));
 app.use(express.static('public'));
 
-const cors = require('cors');
 let allowedOrigins = "*"; // allows all domains to make requests to the API
 app.use(cors({
   origin: (origin, callback) => {
@@ -101,14 +101,14 @@ app.post('/users',
     let errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.status(422).json({errors: error.array()});
+      return res.status(422).json({errors: errors.array()});
     }
 
     let hashedPassword = Users.hashPassword(req.body.password);
     Users.findOne({username: req.body.username}) 
       .then((user) => { 
         if (user) {
-          return res.status(400).send(req.body.username + 'already exists');
+          return res.status(400).send(req.body.username + ' already exists');
         } else {
           Users
             .create({
