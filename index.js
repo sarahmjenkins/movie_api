@@ -9,7 +9,8 @@ const {check, validationResult} = require('express-validator');
 const Movies = Models.Movie;
 const Users = Models.User;
 const auth = require('./auth');
-const passport = require('./passport');
+const passport = require('passport');
+require('./passport.js')
 
 // Connects to local database
 // mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true});
