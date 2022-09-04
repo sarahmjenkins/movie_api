@@ -8,6 +8,8 @@ const cors = require('cors')
 const {check, validationResult} = require('express-validator');
 const Movies = Models.Movie;
 const Users = Models.User;
+const auth = require('./auth');
+const passport = require('./passport');
 
 // Connects to local database
 // mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true});
@@ -35,9 +37,8 @@ app.use(cors({
 }));
 
 // authentication 
-let auth = require('./auth')(app);
-const passport = require('passport');
-require('./passport');
+auth(app);
+passport();
 
 // Welcome message on home page
 app.get('/', (req, res) => {
