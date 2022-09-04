@@ -39,7 +39,6 @@ app.use(cors({
 
 // authentication 
 auth(app);
-passport();
 
 // Welcome message on home page
 app.get('/', (req, res) => {
