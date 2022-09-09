@@ -8,8 +8,8 @@ const movieSchema = mongoose.Schema({
   director: {
     name: String,
     bio: String,
-    birth: Date,
-    death: Date
+    birth: String,
+    death: String
   },
   genre: {
     name: String,
