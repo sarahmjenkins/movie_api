@@ -19,6 +19,7 @@ const generateJWTToken = (user) => {
 
 /**
  * POST user login and create token
+ * @name userLogin
  * @kind function
  * @requires passport
  * @param router 
