@@ -15,7 +15,8 @@ require('./passport.js')
 // Connects to local database
 // mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true});
 
-// Connects to online database
+/** connecting to database MongoDB
+*/
 mongoose.connect(process.env.CONNECTION_URI, {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use(bodyParser.json());
@@ -23,8 +24,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(morgan('common'));
 app.use(express.static('public'));
 
+/** Setting allowedOrigins
+*/
 // let allowedOrigins = "*"; // allows all domains to make requests to the API
-// Updating allowedOrigins for Achievement 3
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http://localhost:1234', 'myflixbysarah.netlify.app', 'http://localhost:4200', 'https://sarahmjenkins.github.io/myFlix-Angular-client/'];
 app.use(cors({
   origin: (origin, callback) => {
@@ -37,16 +39,28 @@ app.use(cors({
   }
 }));
 
-// authentication 
+/** Authentication
+*/
 auth(app);
 
-// Welcome message on home page
+/** 
+ * Welcome message
+ * GET welcome message from '/' endpoint
+ * @kind function
+ * @returns welcome message
+*/
 app.get('/', (req, res) => {
   res.send('Welcome to my movie app!');
 });
 
-// Return a list of all movies
-// passport.authenticate('jwt', {session: false}), 
+/** 
+ * List of all movies
+ * GET list of all movies
+ * Request body: bearer token
+ * @kind function
+ * @requires passport 
+ * @returns array of movie objects
+*/
 app.get('/movies', (req,res) => {
   Movies.find()
     .then((movies) => {
@@ -58,19 +72,35 @@ app.get('/movies', (req,res) => {
     });
 });
 
-// Return a list of all users, make sure to delete
-app.get('/users', (req, res) => {
-  Users.find()
-    .then((users) => {
-      res.status(201).json(users);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send('Error: ' + err);
-    });
-});
 
-// Return data about a single movie
+/** 
+ * List of all users for troubleshooting app issues
+ * GET list of all users
+ * Request body: bearer token
+ * @kind function
+ * @requires passport 
+ * @returns array of user objects
+*/
+// app.get('/users', (req, res) => {
+//   Users.find()
+//     .then((users) => {
+//       res.status(201).json(users);
+//     })
+//     .catch((err) => {
+//       console.error(err);
+//       res.status(500).send('Error: ' + err);
+//     });
+// });
+
+/** 
+ * Data on a single movie
+ * GET data on a single movie
+ * Request body: bearer token
+ * @kind function
+ * @requires passport 
+ * @param title
+ * @returns movie object
+*/
 app.get('/movies/:title', passport.authenticate('jwt', {session: false}), (req, res) => {
   Movies.findOne({title: req.params.title})
     .then((movie) => {
@@ -82,7 +112,15 @@ app.get('/movies/:title', passport.authenticate('jwt', {session: false}), (req, 
     });
 });
 
-// Return data about a genre
+/** 
+ * Data on a single genre
+ * GET data on a single genre
+ * Request body: bearer token
+ * @kind function
+ * @requires passport 
+ * @param genreName
+ * @returns genre object
+*/
 app.get('/genres/:genreName', passport.authenticate('jwt', {session: false}), (req, res) => {
   Movies.findOne({'genre.name': req.params.genreName})
     .then((movie) => {
@@ -94,7 +132,15 @@ app.get('/genres/:genreName', passport.authenticate('jwt', {session: false}), (r
     });
 });
 
-// Return director data by director's name
+/** 
+ * Data on a single director
+ * GET data on a single director
+ * Request body: bearer token
+ * @kind function
+ * @requires passport 
+ * @param directorName
+ * @returns director object
+*/
 app.get('/directors/:directorName', passport.authenticate('jwt', {session: false}), (req, res) => {
   Movies.findOne({'director.name': req.params.directorName})
     .then((movie) => {
@@ -106,7 +152,20 @@ app.get('/directors/:directorName', passport.authenticate('jwt', {session: false
     });
 });
 
-// Allow new users to register
+/** 
+ * User registration
+ * POST new user's data
+ * Request body: bearer token and JSON user object
+ * {
+ *  ID: number,
+ *  username: string,
+ *  password: string,
+ *  email: string,
+ *  birthday: date
+ * }
+ * @kind function
+ * @returns new user object
+*/
 app.post('/register',
   [
     check('username', 'Username is required').isLength({min: 5}),
@@ -147,6 +206,15 @@ app.post('/register',
     });
 
 // Return user info by username
+/** 
+ * Data on a single user
+ * GET data on a single user
+ * Request body: bearer token
+ * @kind function
+ * @requires passport 
+ * @param username
+ * @returns user object
+*/
 app.get('/users/:username', passport.authenticate('jwt', {session: false}), (req, res) =>{
   Users.findOne({username: req.params.username})
     .then((user) => {
@@ -158,7 +226,21 @@ app.get('/users/:username', passport.authenticate('jwt', {session: false}), (req
     });
 });
 
-// Allow users to update their user info by username
+/** 
+ * Update user info
+ * PUT data on a single user
+ * Request body: bearer token and JSON user object
+ * {
+ *  username: string,
+ *  password: string,
+ *  email: string,
+ *  birthday: date
+ * }
+ * @kind function
+ * @requires passport 
+ * @param username
+ * @returns user object
+*/
 app.put('/users/:username',
   [
     check('username', 'Username is required.').isLength({min: 5}),
@@ -192,7 +274,16 @@ app.put('/users/:username',
     });
   });
 
-// Allow users to add a movie to their list of favorites
+/** 
+ * Add movie to favorites
+ * POST a movie to favorite movies array
+ * Request body: bearer token
+ * @kind function
+ * @requires passport 
+ * @param username
+ * @param MovieID
+ * @returns user object
+*/
 app.post('/users/:username/movies/:MovieID', passport.authenticate('jwt', {session: false}), (req, res) => {
   Users.findOneAndUpdate({username: req.params.username}, {
     $push: {favoriteMovies: req.params.MovieID}
@@ -208,7 +299,16 @@ app.post('/users/:username/movies/:MovieID', passport.authenticate('jwt', {sessi
   });
 });
 
-// Allow users to remove a movie from their list of favorites
+/** 
+ * Delete movie from favorites
+ * DELETE movie from favorite movies array
+ * Request body: bearer token
+ * @kind function
+ * @requires passport 
+ * @param username
+ * @param MovieID
+ * @returns user object
+*/
 app.delete('/users/:username/movies/:MovieID', passport.authenticate('jwt', {session: false}), (req, res) => {
   Users.findOneAndUpdate({username: req.params.username}, {
     $pull: {favoriteMovies: req.params.MovieID}
@@ -224,7 +324,15 @@ app.delete('/users/:username/movies/:MovieID', passport.authenticate('jwt', {ses
   });
 });
 
-// Delete: allow user to remove profile
+/** 
+ * Delete user profile
+ * DELETE user object
+ * Request body: bearer token
+ * @kind function
+ * @requires passport 
+ * @param username
+ * @returns status message
+*/
 app.delete('/users/:username', passport.authenticate('jwt', {session: false}), (req, res) => {
   Users.findOneAndRemove({username: req.params.username})
     .then((user) => {
@@ -240,12 +348,18 @@ app.delete('/users/:username', passport.authenticate('jwt', {session: false}), (
     });
 });
 
-// error handler
+/** 
+ * Error handler
+ * @kind function
+*/
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
 
+/** 
+ * Request listener
+*/
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0',() => {
   console.log('Listening on Port ' + port);
