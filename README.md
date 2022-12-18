@@ -58,4 +58,4 @@ This project can be run locally using Node.js. The project also requires MongoDB
 ## Deployed API
 
 [Movie API](https://myflixbysarah.herokuapp.com/)
-[Endpoint Documentation] (https://myflixbysarah.herokuapp.com/documentation/html)
+[Endpoint Documentation](https://myflixbysarah.herokuapp.com/documentation/html)
